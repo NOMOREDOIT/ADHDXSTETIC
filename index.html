@@ -143,11 +143,17 @@
             margin-bottom: 15px;
         }
 
-        .image-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        
-        .two-col-grid {
-             grid-template-columns: repeat(2, 1fr);
+        .summary-text {
+            font-family: "MS Sans Serif", "Tahoma", sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            text-align: center;
         }
+
+        .image-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .two-col-grid { grid-template-columns: repeat(2, 1fr); }
+        .three-col-grid { grid-template-columns: repeat(3, 1fr); }
 
         .grid-image-container {
             overflow: hidden;
@@ -166,6 +172,11 @@
         
         .grid-image-container:hover img {
             transform: scale(1.1); /* Zoom effect on hover */
+        }
+        
+        .single-image-wrapper {
+            max-width: 75%;
+            margin: 0 auto; /* Center the container */
         }
     </style>
 </head>
@@ -244,8 +255,8 @@
                 <div class="grid-image-container"><img src="no32.jpg" alt="Gallery Image 32"></div>
                 <div class="grid-image-container"><img src="no33.jpg" alt="Gallery Image 33"></div>
                 <div class="grid-image-container"><img src="no34.jpg" alt="Gallery Image 34"></div>
-                <div class="grid-image-container"><img src="no35.jpg" alt="Gallery Image 33"></div>
-                <div class="grid-image-container"><img src="no36.jpg" alt="Gallery Image 34"></div>
+                <div class="grid-image-container"><img src="no35.jpg" alt="Gallery Image 35"></div>
+                <div class="grid-image-container"><img src="no36.jpg" alt="Gallery Image 36"></div>
             </div>
         </div>
         <div class="gallery-section">
@@ -253,6 +264,31 @@
             <div class="image-grid two-col-grid">
                 <div class="grid-image-container"><img src="no37.jpg" alt="Gallery Image 37"></div>
                 <div class="grid-image-container"><img src="no38.jpg" alt="Gallery Image 38"></div>
+            </div>
+        </div>
+        <div class="gallery-section">
+            <h3>ADHDified looks, 100%:</h3>
+            <div class="image-grid three-col-grid">
+                <div class="grid-image-container"><img src="no39.jpg" alt="Gallery Image 39"></div>
+                <div class="grid-image-container"><img src="no40.jpg" alt="Gallery Image 40"></div>
+                <div class="grid-image-container"><img src="no41.jpg" alt="Gallery Image 41"></div>
+            </div>
+        </div>
+        <div class="gallery-section">
+            <p class="summary-text">This would be great use of the ADHDIFIER for targeted raids, not for the main x account. It takes like 30 seconds, raids will go hard.</p>
+            <div class="single-image-wrapper">
+                <div class="grid-image-container">
+                    <img src="no42.jpg" alt="Gallery Image 42">
+                </div>
+            </div>
+        </div>
+        <div class="gallery-section">
+            <h3>AI that works:</h3>
+            <div class="image-grid">
+                <div class="grid-image-container"><img src="no43.jpg" alt="Gallery Image 43"></div>
+                <div class="grid-image-container"><img src="no44.jpg" alt="Gallery Image 44"></div>
+                <div class="grid-image-container"><img src="no45.jpg" alt="Gallery Image 45"></div>
+                <div class="grid-image-container"><img src="no46.jpg" alt="Gallery Image 46"></div>
             </div>
         </div>
     </div>
