@@ -46,6 +46,28 @@
             pointer-events: none;
             z-index: -1;
         }
+
+        /* --- Header Container to group title and first block --- */
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 15px; /* Controls space between title and buttons block */
+        }
+
+        /* --- Main Page Title --- */
+        .main-title {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(1.25rem, 4vw, 2.5rem); /* Half size */
+            color: #FFFFFF;
+            text-shadow: 2px 2px 0 #000000; /* Adjusted for smaller font */
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 1.1;
+            width: 100%;
+            margin: 0; /* Remove default h1 margin */
+        }
         
         /* --- General Window/Block Style --- */
         .ui-block {
@@ -301,6 +323,49 @@
             padding-top: 40px; /* Make space for the close button */
         }
 
+        /* --- ADHD Game Styles --- */
+        #game-area {
+            width: 100%;
+            height: 300px;
+            background-color: #222;
+            border: 2px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+            box-sizing: border-box;
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+        #game-object {
+            position: absolute;
+            width: 80px; /* Increased size for images */
+            height: 80px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, top 0.15s ease-in-out, left 0.15s ease-in-out;
+            border: 2px solid var(--border-highlight);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            background-color: #555; /* Fallback color */
+        }
+        #game-object-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the box without distortion */
+            display: block;
+        }
+        #game-object:hover {
+            transform: scale(1.15);
+            border-color: gold;
+            box-shadow: 0 0 15px gold;
+        }
+        #game-message {
+            text-align: center;
+            font-family: "MS Sans Serif", "Tahoma", sans-serif;
+            font-weight: bold;
+            margin-top: 15px;
+            height: 20px; /* Prevents layout shift */
+        }
+
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
             body { padding: 20px 10px; gap: 20px; }
@@ -317,14 +382,17 @@
 </head>
 <body>
 
-    <div class="resources-wrapper ui-block">
-        <div class="button-container">
-            <a href="https://nomoredoit.github.io/ADHD/" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD Main Website</a>
-            <a href="https://nomoredoit.github.io/ADHD/maker.html" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD Mememaker</a>
-            <a href="https://nomoredoit.github.io/ADHD/ADHDify.html" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD-ifier</a>
-            <button type="button" id="prompt-btn" class="resource-btn">X POST PROMPTS</button>
-            <a href="https://www.remove.bg/upload" target="_blank" rel="noopener noreferrer" class="resource-btn">Background remover</a>
-            <a href="https://x.com/ADHDForReal" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD meme inspo</a>
+    <div class="header-container">
+        <h1 class="main-title">$ADHD X POSTS</h1>
+        <div class="resources-wrapper ui-block">
+            <div class="button-container">
+                <a href="https://nomoredoit.github.io/ADHD/" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD Main Website</a>
+                <a href="https://nomoredoit.github.io/ADHD/maker.html" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD Mememaker</a>
+                <a href="https://nomoredoit.github.io/ADHD/ADHDify.html" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD-ifier</a>
+                <button type="button" id="prompt-btn" class="resource-btn">X POST PROMPTS</button>
+                <a href="https://www.remove.bg/upload" target="_blank" rel="noopener noreferrer" class="resource-btn">Background remover</a>
+                <a href="https://x.com/ADHDForReal" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD meme inspo</a>
+            </div>
         </div>
     </div>
 
@@ -456,6 +524,21 @@
         </div>
     </div>
 
+    <!-- ADHD GAME -->
+    <div class="galleries-wrapper ui-block">
+        <div class="window-content-padding" style="padding-bottom: 5px;">
+             <h3>ADHD Simulation</h3>
+            <p style="text-align:center; margin-bottom: 15px; font-size: 0.9rem;">As a reward for reading all of this, and doing amazing work on the x... The goal is to just click the picture thing...</p>
+            <div id="game-area">
+                <div id="game-object">
+                    <img id="game-object-img" src="" alt="Shiny Object">
+                </div>
+            </div>
+            <p id="game-message">Click it to start!</p>
+        </div>
+    </div>
+
+
     <!-- Lightbox Structure -->
     <div id="lightbox" class="lightbox-overlay">
         <img id="lightbox-image" src="" alt="Expanded view">
@@ -475,6 +558,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // ... (Lightbox, Prompt, and Video logic remains here) ...
+            
             // --- Lightbox Logic ---
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
@@ -516,61 +601,115 @@
             }
 
             // --- Video Player Logic ---
-            const videoContent = document.querySelector('.video-content'); // Fixed selector
+            const videoContent = document.querySelector('.video-content');
             const video = document.getElementById('video-player');
-            const controlsOverlay = document.getElementById('controls-overlay');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const playIcon = document.getElementById('play-icon');
-            const pauseIcon = document.getElementById('pause-icon');
-            const progressBar = document.getElementById('progress-bar');
-            const currentTimeEl = document.getElementById('current-time');
-            const durationEl = document.getElementById('duration');
-            const volumeBtn = document.getElementById('volume-btn');
-            const volumeIconHigh = document.getElementById('volume-icon-high');
-            const volumeIconMuted = document.getElementById('volume-icon-muted');
-            const volumeSlider = document.getElementById('volume-slider');
-            const speedIndicator = document.getElementById('speed-indicator');
-            const pipBtn = document.getElementById('pip-btn');
-            const fullscreenBtn = document.getElementById('fullscreen-btn');
-            const fullscreenIcon = document.getElementById('fullscreen-icon');
-            const exitFullscreenIcon = document.getElementById('exit-fullscreen-icon');
-            let wasPlaying = false;
-            let controlsTimeout;
-            function formatTime(timeInSeconds) { const result = new Date(timeInSeconds * 1000).toISOString().substr(11, 8); return { minutes: result.substr(3, 2), seconds: result.substr(6, 2), hours: result.substr(0, 2) }; }
-            function displayTime(timeInSeconds, element) { const time = formatTime(timeInSeconds); const display = (time.hours === '00') ? `${time.minutes}:${time.seconds}` : `${time.hours}:${time.minutes}:${time.seconds}`; element.textContent = display; }
-            function updateProgress() { progressBar.value = (video.currentTime / video.duration) * 100 || 0; displayTime(video.currentTime, currentTimeEl); }
-            function setVideoProgress() { video.currentTime = (progressBar.value / 100) * video.duration; }
-            function togglePlay() { if (video.paused || video.ended) { video.play(); } else { video.pause(); } }
-            function updatePlayPauseIcon() { playIcon.classList.toggle('hidden', !video.paused); pauseIcon.classList.toggle('hidden', video.paused); }
-            function setVideoData() { displayTime(video.duration, durationEl); progressBar.max = 100; }
-            function handleVolumeChange() { video.volume = volumeSlider.value; video.muted = volumeSlider.value === '0'; }
-            function updateVolumeUI() { volumeSlider.value = video.muted ? 0 : video.volume; volumeIconHigh.classList.toggle('hidden', video.muted || video.volume === 0); volumeIconMuted.classList.toggle('hidden', !video.muted && video.volume > 0); }
-            function toggleMute() { video.muted = !video.muted; if (video.muted) { volumeSlider.dataset.lastValue = volumeSlider.value; volumeSlider.value = 0; } else { volumeSlider.value = volumeSlider.dataset.lastValue || 1; } handleVolumeChange(); }
-            const speeds = [1.0, 1.25, 1.5, 1.75, 2.0, 0.75]; let currentSpeedIndex = 0;
-            function changeSpeed() { currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length; const newSpeed = speeds[currentSpeedIndex]; video.playbackRate = newSpeed; speedIndicator.textContent = `${newSpeed.toFixed(2)}x`; }
-            function togglePip() { if (document.pictureInPictureElement) { document.exitPictureInPicture(); } else if (document.pictureInPictureEnabled) { video.requestPictureInPicture(); } }
-            function toggleFullscreen() { if (!document.fullscreenElement) { videoContent.requestFullscreen().catch(err => { alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`); }); } else { document.exitFullscreen(); } }
-            function updateFullscreenIcon() { const isFullscreen = !!document.fullscreenElement; fullscreenIcon.classList.toggle('hidden', isFullscreen); exitFullscreenIcon.classList.toggle('hidden', !isFullscreen); }
-            function hideControls() { if(video.paused) return; controlsOverlay.classList.remove('visible'); }
-            function showControls() { controlsOverlay.classList.add('visible'); clearTimeout(controlsTimeout); controlsTimeout = setTimeout(hideControls, 3000); }
-            video.addEventListener('loadedmetadata', setVideoData);
-            video.addEventListener('timeupdate', updateProgress);
-            video.addEventListener('play', updatePlayPauseIcon);
-            video.addEventListener('pause', updatePlayPauseIcon);
-            video.addEventListener('click', togglePlay);
-            video.addEventListener('volumechange', updateVolumeUI);
-            playPauseBtn.addEventListener('click', togglePlay);
-            progressBar.addEventListener('input', setVideoProgress);
-            progressBar.addEventListener('mousedown', () => { wasPlaying = !video.paused; if(wasPlaying) video.pause(); });
-            progressBar.addEventListener('mouseup', () => { if(wasPlaying) video.play(); });
-            volumeBtn.addEventListener('click', toggleMute);
-            volumeSlider.addEventListener('input', handleVolumeChange);
-            speedIndicator.addEventListener('click', changeSpeed);
-            pipBtn.addEventListener('click', togglePip);
-            fullscreenBtn.addEventListener('click', toggleFullscreen);
-            document.addEventListener('fullscreenchange', updateFullscreenIcon);
-            videoContent.addEventListener('mousemove', showControls);
-            videoContent.addEventListener('mouseleave', () => { clearTimeout(controlsTimeout); hideControls(); });
+            if (videoContent && video) {
+                const controlsOverlay = document.getElementById('controls-overlay');
+                const playPauseBtn = document.getElementById('play-pause-btn');
+                const playIcon = document.getElementById('play-icon');
+                const pauseIcon = document.getElementById('pause-icon');
+                const progressBar = document.getElementById('progress-bar');
+                const currentTimeEl = document.getElementById('current-time');
+                const durationEl = document.getElementById('duration');
+                const volumeBtn = document.getElementById('volume-btn');
+                const volumeIconHigh = document.getElementById('volume-icon-high');
+                const volumeIconMuted = document.getElementById('volume-icon-muted');
+                const volumeSlider = document.getElementById('volume-slider');
+                const speedIndicator = document.getElementById('speed-indicator');
+                const pipBtn = document.getElementById('pip-btn');
+                const fullscreenBtn = document.getElementById('fullscreen-btn');
+                const fullscreenIcon = document.getElementById('fullscreen-icon');
+                const exitFullscreenIcon = document.getElementById('exit-fullscreen-icon');
+                let wasPlaying = false;
+                let controlsTimeout;
+                function formatTime(timeInSeconds) { const result = new Date(timeInSeconds * 1000).toISOString().substr(11, 8); return { minutes: result.substr(3, 2), seconds: result.substr(6, 2), hours: result.substr(0, 2) }; }
+                function displayTime(timeInSeconds, element) { const time = formatTime(timeInSeconds); const display = (time.hours === '00') ? `${time.minutes}:${time.seconds}` : `${time.hours}:${time.minutes}:${time.seconds}`; element.textContent = display; }
+                function updateProgress() { progressBar.value = (video.currentTime / video.duration) * 100 || 0; displayTime(video.currentTime, currentTimeEl); }
+                function setVideoProgress() { video.currentTime = (progressBar.value / 100) * video.duration; }
+                function togglePlay() { if (video.paused || video.ended) { video.play(); } else { video.pause(); } }
+                function updatePlayPauseIcon() { playIcon.classList.toggle('hidden', !video.paused); pauseIcon.classList.toggle('hidden', video.paused); }
+                function setVideoData() { if(!video.duration) return; displayTime(video.duration, durationEl); progressBar.max = 100; }
+                function handleVolumeChange() { video.volume = volumeSlider.value; video.muted = volumeSlider.value === '0'; }
+                function updateVolumeUI() { volumeSlider.value = video.muted ? 0 : video.volume; volumeIconHigh.classList.toggle('hidden', video.muted || video.volume === 0); volumeIconMuted.classList.toggle('hidden', !video.muted && video.volume > 0); }
+                function toggleMute() { video.muted = !video.muted; if (video.muted) { volumeSlider.dataset.lastValue = volumeSlider.value; volumeSlider.value = 0; } else { volumeSlider.value = volumeSlider.dataset.lastValue || 1; } handleVolumeChange(); }
+                const speeds = [1.0, 1.25, 1.5, 1.75, 2.0, 0.75]; let currentSpeedIndex = 0;
+                function changeSpeed() { currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length; const newSpeed = speeds[currentSpeedIndex]; video.playbackRate = newSpeed; speedIndicator.textContent = `${newSpeed.toFixed(2)}x`; }
+                function togglePip() { if (document.pictureInPictureElement) { document.exitPictureInPicture(); } else if (document.pictureInPictureEnabled) { video.requestPictureInPicture(); } }
+                function toggleFullscreen() { if (!document.fullscreenElement) { videoContent.requestFullscreen().catch(err => { alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`); }); } else { document.exitFullscreen(); } }
+                function updateFullscreenIcon() { const isFullscreen = !!document.fullscreenElement; fullscreenIcon.classList.toggle('hidden', isFullscreen); exitFullscreenIcon.classList.toggle('hidden', !isFullscreen); }
+                function hideControls() { if(video.paused) return; controlsOverlay.classList.remove('visible'); }
+                function showControls() { controlsOverlay.classList.add('visible'); clearTimeout(controlsTimeout); controlsTimeout = setTimeout(hideControls, 3000); }
+                video.addEventListener('loadedmetadata', setVideoData);
+                video.addEventListener('timeupdate', updateProgress);
+                video.addEventListener('play', updatePlayPauseIcon);
+                video.addEventListener('pause', updatePlayPauseIcon);
+                video.addEventListener('click', togglePlay);
+                video.addEventListener('volumechange', updateVolumeUI);
+                playPauseBtn.addEventListener('click', togglePlay);
+                progressBar.addEventListener('input', setVideoProgress);
+                progressBar.addEventListener('mousedown', () => { wasPlaying = !video.paused; if(wasPlaying) video.pause(); });
+                progressBar.addEventListener('mouseup', () => { if(wasPlaying) video.play(); });
+                volumeBtn.addEventListener('click', toggleMute);
+                volumeSlider.addEventListener('input', handleVolumeChange);
+                speedIndicator.addEventListener('click', changeSpeed);
+                pipBtn.addEventListener('click', togglePip);
+                fullscreenBtn.addEventListener('click', toggleFullscreen);
+                document.addEventListener('fullscreenchange', updateFullscreenIcon);
+                videoContent.addEventListener('mousemove', showControls);
+                videoContent.addEventListener('mouseleave', () => { clearTimeout(controlsTimeout); hideControls(); });
+            }
+
+            // --- ADHD Game Logic ---
+            const gameArea = document.getElementById('game-area');
+            const gameObject = document.getElementById('game-object');
+            const gameObjectImg = document.getElementById('game-object-img'); // Get the image element
+            const gameMessage = document.getElementById('game-message');
+
+            if (gameArea && gameObject && gameObjectImg && gameMessage) {
+                let score = 0;
+                // Array of image sources from your website
+                const imageSources = [
+                    'no13.jpg', 'no17.jpg', 'no21.jpg', 'no25.jpg', 'no33.jpg', 
+                    'no100.png', 'no101.png', 'no40.jpg', 'no42.jpg', 'no46.jpg'
+                ];
+                const messages = [
+                    "Nice one IPPI! Ooh, look at that!",
+                    "Get it RUSTY! What's next?",
+                    "Quick! Before you get bored DRAFTY.",
+                    "Yes! But wait, that one's cooler, go get it.",
+                    "You're doing it! What were we doing again?",
+                    "Another one K.K!",
+                    "Focus! ...on that image and SMASH ITTTT."
+                ];
+
+                function spawnObject() {
+                    // Move the object to a random position
+                    const maxX = gameArea.clientWidth - gameObject.clientWidth;
+                    const maxY = gameArea.clientHeight - gameObject.clientHeight;
+                    gameObject.style.left = `${Math.floor(Math.random() * maxX)}px`;
+                    gameObject.style.top = `${Math.floor(Math.random() * maxY)}px`;
+
+                    // Change its appearance by setting the image source
+                    const randomImageSrc = imageSources[Math.floor(Math.random() * imageSources.length)];
+                    gameObjectImg.src = randomImageSrc;
+                    
+                    // Update the message and score
+                    if (score > 0) {
+                        gameMessage.textContent = `${messages[Math.floor(Math.random() * messages.length)]} (Score: ${score})`;
+                    } else {
+                        gameMessage.textContent = "Click the image to start!";
+                    }
+                }
+
+                gameObject.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevents clicks from propagating to other elements
+                    score++;
+                    spawnObject();
+                });
+
+                // Initial spawn
+                spawnObject();
+            }
         });
     </script>
 </body>
