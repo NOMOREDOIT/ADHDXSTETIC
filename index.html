@@ -210,6 +210,7 @@
         .three-col-grid { grid-template-columns: repeat(3, 1fr); }
 
         .grid-image-container {
+            position: relative; /* Needed for the X overlay */
             overflow: hidden;
             background-color: #ccc;
             aspect-ratio: 4 / 3;
@@ -231,6 +232,25 @@
         
         .grid-image-container:hover img {
             transform: scale(1.1);
+        }
+
+        /* --- NEW: Transparent X Overlay --- */
+        .image-with-cross::before,
+        .image-with-cross::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 8px; /* Thickness of the X */
+            background-color: rgba(255, 0, 0, 0.7); /* Transparent red */
+            z-index: 1; /* Make sure it's on top of the image */
+        }
+        .image-with-cross::before {
+            transform: translateY(-50%) rotate(45deg); /* First bar of the X */
+        }
+        .image-with-cross::after {
+            transform: translateY(-50%) rotate(-45deg); /* Second bar of the X */
         }
         
         .single-image-wrapper {
@@ -426,7 +446,8 @@
             <p><strong>In short:</strong> Use the three characters with visual consistency. For everyone else - slap on the ADHD crown if it makes sense.</p>
             <div class="image-grid two-col-grid">
                 <div class="grid-image-container contain-image"><img src="no100.png" alt="Main Character 1"></div>
-                <div class="grid-image-container contain-image"><img src="no101.png" alt="Main Character 2"></div>
+                <!-- ADDED CLASS "image-with-cross" HERE -->
+                <div class="grid-image-container contain-image image-with-cross"><img src="no101.png" alt="Main Character 2"></div>
             </div>
         </div>
     </div>
@@ -527,8 +548,8 @@
     <!-- ADHD GAME -->
     <div class="galleries-wrapper ui-block">
         <div class="window-content-padding" style="padding-bottom: 5px;">
-             <h3>ADHD Simulation</h3>
-            <p style="text-align:center; margin-bottom: 15px; font-size: 0.9rem;">As a reward for reading all of this, and doing amazing work on the x... The goal is to just click the picture thing...</p>
+             <h3>Bonus Level: An ADHD Simulation</h3>
+            <p style="text-align:center; margin-bottom: 15px; font-size: 0.9rem;">The goal is to... uh... just click the shiny thing.</p>
             <div id="game-area">
                 <div id="game-object">
                     <img id="game-object-img" src="" alt="Shiny Object">
@@ -673,13 +694,13 @@
                     'no100.png', 'no101.png', 'no40.jpg', 'no42.jpg', 'no46.jpg'
                 ];
                 const messages = [
-                    "Nice one IPPI! Ooh, look at that!",
-                    "Get it RUSTY! What's next?",
-                    "Quick! Before you get bored DRAFTY.",
-                    "Yes! But wait, that one's cooler, go get it.",
+                    "Nice one! Ooh, look at that!",
+                    "Get it! What's next?",
+                    "Quick! Before you get bored.",
+                    "Yes! But wait, that one's cooler.",
                     "You're doing it! What were we doing again?",
-                    "Another one K.K!",
-                    "Focus! ...on that image and SMASH ITTTT."
+                    "Another one!",
+                    "Focus! ...on that image."
                 ];
 
                 function spawnObject() {
