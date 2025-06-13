@@ -82,6 +82,7 @@
             text-decoration: none;
             color: var(--text-color);
             font-size: 0.9rem;
+            cursor: pointer;
         }
         .resource-btn:active {
             border-color: var(--border-color) var(--border-highlight) var(--border-highlight) var(--border-color);
@@ -242,6 +243,63 @@
             box-shadow: 0 0 25px rgba(0,0,0,0.5);
             cursor: default;
         }
+        
+        /* --- Prompt Popup Styles --- */
+        .prompt-popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .prompt-popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .prompt-popup-content {
+            position: relative; /* For positioning the close button */
+            max-width: 550px;
+            width: 100%;
+            cursor: default;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+        .prompt-popup-overlay.active .prompt-popup-content {
+            transform: scale(1);
+        }
+        .prompt-close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--title-bar-bg);
+            border: 1px solid;
+            border-color: var(--border-highlight) var(--border-color) var(--border-color) var(--border-highlight);
+            box-shadow: 1px 1px 0 1px #000;
+            width: 24px;
+            height: 24px;
+            font-size: 20px;
+            line-height: 22px;
+            padding: 0;
+            cursor: pointer;
+            z-index: 10;
+            color: var(--text-color);
+        }
+        .prompt-close-button:active {
+            border-color: var(--border-color) var(--border-highlight) var(--border-highlight) var(--border-color);
+            box-shadow: none;
+            transform: translate(1px, 1px);
+        }
+        .prompt-popup-content .window-content-padding {
+            padding-top: 40px; /* Make space for the close button */
+        }
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
@@ -264,6 +322,7 @@
             <a href="https://nomoredoit.github.io/ADHD/" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD Main Website</a>
             <a href="https://nomoredoit.github.io/ADHD/maker.html" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD Mememaker</a>
             <a href="https://nomoredoit.github.io/ADHD/ADHDify.html" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD-ifier</a>
+            <button type="button" id="prompt-btn" class="resource-btn">X POST PROMPTS</button>
             <a href="https://www.remove.bg/upload" target="_blank" rel="noopener noreferrer" class="resource-btn">Background remover</a>
             <a href="https://x.com/ADHDForReal" target="_blank" rel="noopener noreferrer" class="resource-btn">ADHD meme inspo</a>
         </div>
@@ -324,6 +383,11 @@
         </div>
         <div class="gallery-section">
             <h3>What we are aiming for on X:</h3>
+            <p>Why?</p>
+            <p>For the X account, even a small human touch - like overlaying AI content on a custom background - can add authenticity and make posts stand out.</p>
+            <p>AI should either appear handcrafted or be prompted at a high level (which we are still researching, there are some decent examples at the bottom of the page). Low-effort outputs blend into the flood of AI crypto content & blends us in, rather than stands us out.</p>
+            <p>If this much effort is going into the account from all of us, the visuals should reflect that. Posts should feel intentional and exciting. From past posts even, the ones that are layered, or have the human element to them, metrics have shown they perform best. As well, the MemeMaker, really makes this style of artwork easy!</p>
+            <p>Full out AI artwork is great for stickers, the TG, and community posts. The main x needs to be a stand alone powerhouse of creative ADHD content.</p>
             <div class="image-grid">
                 <div class="grid-image-container"><img src="no13.jpg" alt="Gallery Image 13"></div>
                 <div class="grid-image-container"><img src="no14.jpg" alt="Gallery Image 14"></div>
@@ -397,6 +461,18 @@
         <img id="lightbox-image" src="" alt="Expanded view">
     </div>
 
+    <!-- Prompt Popup Structure -->
+    <div id="prompt-overlay" class="prompt-popup-overlay">
+        <div class="prompt-popup-content ui-block">
+            <button id="close-prompt-btn" class="prompt-close-button">×</button>
+            <div class="window-content-padding">
+                <h3>X Post Prompts</h3>
+                <p>X posts should be focused primarily towards ADHD content. If you are struggling with what to say for a photo you have created, just upload the image or describe it to chatGPT, and say "Write me a list of x meme post captions for [the scene description/ or upload]" & it will give you a long list, then just keep refining it.</p>
+                <p>LOL also avoid the words chaos or the use of this linear symbol "human touch — like overlaying," both are dead give-aways it was from AI. - & lastly, try to avoid $ADHD SHILL posts on main x, that will be better used for community posts & raids in comment sections. - & avoid reposting shill posts as well, unless it is someone influencial in the Solana space to flex.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Lightbox Logic ---
@@ -422,8 +498,25 @@
                 e.stopPropagation();
             });
 
+            // --- Prompt Popup Logic ---
+            const promptBtn = document.getElementById('prompt-btn');
+            const promptOverlay = document.getElementById('prompt-overlay');
+            const closePromptBtn = document.getElementById('close-prompt-btn');
+            const promptContent = document.querySelector('.prompt-popup-content');
+
+            if (promptBtn && promptOverlay && closePromptBtn && promptContent) {
+                const openPopup = () => promptOverlay.classList.add('active');
+                const closePopup = () => promptOverlay.classList.remove('active');
+                
+                promptBtn.addEventListener('click', openPopup);
+                closePromptBtn.addEventListener('click', closePopup);
+                promptOverlay.addEventListener('click', closePopup);
+                
+                promptContent.addEventListener('click', (e) => e.stopPropagation());
+            }
+
             // --- Video Player Logic ---
-            const videoContent = document.getElementById('video-content');
+            const videoContent = document.querySelector('.video-content'); // Fixed selector
             const video = document.getElementById('video-player');
             const controlsOverlay = document.getElementById('controls-overlay');
             const playPauseBtn = document.getElementById('play-pause-btn');
