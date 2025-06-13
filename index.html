@@ -88,7 +88,7 @@
             box-shadow: none;
             transform: translate(1px, 1px);
         }
-
+        
         /* --- Quote Block --- */
         .quote-wrapper {
             padding: 15px 25px;
@@ -104,48 +104,27 @@
             line-height: 1.6;
             margin: 0;
         }
-
-        /* --- Video Player Window --- */
-        .window {
-            height: auto;
-            display: flex;
-            flex-direction: column;
-            min-width: 480px;
-        }
-
-        .title-bar {
-            background-color: var(--title-bar-bg);
-            padding: 5px 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: default;
-            user-select: none;
-            border-bottom: 1px solid var(--border-color);
-            flex-shrink: 0;
-        }
         
-        .title-bar-text { color: var(--text-color); font-weight: 500; }
-        .window-controls { display: flex; gap: 4px; }
-        .window-control { width: 16px; height: 16px; border: 1px solid var(--border-color); background-color: #D3D3D3; }
-
-        .description-section {
+        .window-content-padding {
             padding: 15px 20px;
-            color: var(--text-color);
-            border-top: 1px solid var(--border-color);
         }
-        .description-section h4 {
+        .window-content-padding h3, .galleries-wrapper h3 {
             font-family: "MS Sans Serif", "Tahoma", sans-serif;
-            font-weight: bold;
+            font-weight: normal;
             font-size: 1rem;
-            margin: 0 0 10px 0;
+            margin-top: 5px;
+            margin-bottom: 15px;
         }
-        .description-section p {
+        .window-content-padding p, .galleries-wrapper p {
             font-size: 0.9rem;
             line-height: 1.5;
-            margin: 0;
+            margin: 0 0 1em 0;
+        }
+        .window-content-padding p:last-of-type {
+            margin-bottom: 20px;
         }
 
+        /* --- Video Player Styles --- */
         .video-content {
             flex-grow: 1;
             background-color: #000;
@@ -154,7 +133,6 @@
             justify-content: center;
             align-items: center;
             min-height: 200px;
-            border-top: 1px solid var(--border-color);
         }
         
         #video-player { width: 100%; height: auto; display: block; max-height: 70vh; }
@@ -195,14 +173,6 @@
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
         }
-
-        .galleries-wrapper h3 {
-            font-family: "MS Sans Serif", "Tahoma", sans-serif;
-            font-weight: normal;
-            font-size: 1rem;
-            margin-top: 5px;
-            margin-bottom: 15px;
-        }
         
         .summary-text {
             font-family: "MS Sans Serif", "Tahoma", sans-serif;
@@ -211,7 +181,7 @@
             margin-bottom: 15px;
             text-align: center;
         }
-
+        
         .image-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .two-col-grid { grid-template-columns: repeat(2, 1fr); }
         .three-col-grid { grid-template-columns: repeat(3, 1fr); }
@@ -230,6 +200,10 @@
             display: block;
             object-fit: cover;
             transition: transform 0.3s ease;
+        }
+        
+        .grid-image-container.contain-image img {
+            object-fit: contain; /* FIX: This shows the entire PNG without cropping */
         }
         
         .grid-image-container:hover img {
@@ -266,29 +240,16 @@
             max-width: 90%;
             max-height: 90%;
             box-shadow: 0 0 25px rgba(0,0,0,0.5);
-            cursor: default; /* Make the image have a default cursor, not the pointer */
+            cursor: default;
         }
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
-            body {
-                padding: 20px 10px;
-                gap: 20px;
-            }
-            .ui-block, .window {
-                width: 95vw;
-                min-width: 0;
-            }
-            .quote-wrapper {
-                padding: 15px;
-            }
-            .resource-btn {
-                font-size: 0.8rem;
-                padding: 6px 12px;
-            }
-            .galleries-wrapper h3 {
-                text-align: center;
-            }
+            body { padding: 20px 10px; gap: 20px; }
+            .ui-block, .window { width: 95vw; min-width: 0; }
+            .quote-wrapper { padding: 15px; }
+            .resource-btn { font-size: 0.8rem; padding: 6px 12px; }
+            .galleries-wrapper h3, .window-content-padding h3 { text-align: center; }
             .image-grid { grid-template-columns: repeat(2, 1fr); }
             .three-col-grid { grid-template-columns: repeat(3, 1fr); }
             .single-image-wrapper { max-width: 100%; }
@@ -309,38 +270,36 @@
     </div>
 
     <div class="quote-wrapper ui-block">
-        <p>"Blur the line between meme page and crypto page. Just post like it’s an ADHD meme page. The meme followers stay engaged without even realizing it’s crypto - while the  crypto bros remain well aware." - ippi 😂</p>
+        <p>"Blur the line between meme page and crypto page. Just post like it’s an ADHD meme page. The meme followers stay engaged without even realizing it’s crypto - while the  crypto bros remain well aware." - IPPI LOL</p>
     </div>
-
-    <div class="window ui-block">
-        <div class="title-bar">
-            <span class="title-bar-text">ADHDify Magic Filter</span>
-            <div class="window-controls">
-                <div class="window-control"></div>
-                <div class="window-control"></div>
-                <div class="window-control"></div>
+    
+    <div class="ui-block">
+        <div class="window-content-padding">
+             <h3>ADHDified Crown:</h3>
+            <p>This is one of the most powerful tools IPPI and I believe we all have for $ADHD. It acts like a badge - something you can place on any character, person, or animal to clearly show they have ADHD. Instead of just a cat having an ADHD moment, it becomes the ADHD cat-wearing the ADHD crown, fully on-brand and instantly recognizable. Try quickly incorporating it into your posts whenever someone in the post clearly has ADHD - it reinforces the identity and strengthens the brand. It’s also an incredibly effective marketing tool, as you’ll see below.</p>
+            <div class="image-grid three-col-grid">
+                <div class="grid-image-container"><img src="no39.jpg" alt="Gallery Image 39"></div>
+                <div class="grid-image-container"><img src="no40.jpg" alt="Gallery Image 40"></div>
+                <div class="grid-image-container"><img src="no41.jpg" alt="Gallery Image 41"></div>
+            </div>
+            <p class="summary-text" style="margin-top: 20px;">This would be great use of the ADHDIFIER for targeted raids, not for the main x account. It takes like 30 seconds, raids will go hard.</p>
+            <div class="single-image-wrapper">
+                <div class="grid-image-container">
+                    <img src="no42.jpg" alt="Gallery Image 42">
+                </div>
             </div>
         </div>
-        <div class="description-section">
-            <h4>Jazz Up Your AI Memes:</h4>
-            <p>AI is great for making memes fast and easy, but if you want to take it up a notch, heres one helpful method: use a background remover and swap out the default AI background with something that better fits your vision. It adds personality, polish, and makes your meme feel like it had that extra bit of effort.</p>
-        </div>
-        <div class="video-content" id="video-content">
-            <video id="video-player" src="instructionvid.mov" preload="metadata"></video>
-            <div class="video-controls-overlay" id="controls-overlay">
-                <div class="upper-controls">
-                    <div class="left-controls">
-                        <button id="volume-btn" title="Mute/Unmute"><svg id="volume-icon-high" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg><svg id="volume-icon-muted" class="hidden" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"></path></svg></button>
-                        <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="1">
-                    </div>
-                    <button id="play-pause-btn" class="play-pause-btn" title="Play/Pause"><svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg id="pause-icon" class="hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg></button>
-                    <div class="right-controls">
-                        <button id="pip-btn" title="Picture-in-Picture"><svg viewBox="0 0 24 24"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"></path></svg></button>
-                        <button id="fullscreen-btn" title="Fullscreen"><svg id="fullscreen-icon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg><svg id="exit-fullscreen-icon" class="hidden" viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path></svg></button>
-                        <span id="speed-indicator" class="speed-indicator" title="Change playback speed">1.0x</span>
-                    </div>
-                </div>
-                <div class="progress-container"><span id="current-time">00:00</span><input type="range" id="progress-bar" class="progress-bar" min="0" value="0" step="0.1"><span id="duration">00:00</span></div>
+    </div>
+    
+    <div class="ui-block">
+        <div class="window-content-padding">
+            <h3>Our Three Main Characters:</h3>
+            <p>These three below are our trademark ADHD characters. That means we need to keep them consistent - visually and conceptually. Avoid warping them too far off-brand. If you're using AI to create with them, make sure their features stay true to the originals, mainly facial and overall structure (not including costumes and all the fun additions if it is relevant to the meme)</p>
+            <p>If you’re NOT using one of the main three, that’s where the ADHD crown comes in. Use it to ADHD-ify any character, person, or animal when it fits the meme.</p>
+            <p><strong>In short:</strong> Use the three characters with visual consistency. For everyone else - slap on the ADHD crown if it makes sense.</p>
+            <div class="image-grid two-col-grid">
+                <div class="grid-image-container contain-image"><img src="no100.png" alt="Main Character 1"></div>
+                <div class="grid-image-container contain-image"><img src="no101.png" alt="Main Character 2"></div>
             </div>
         </div>
     </div>
@@ -393,28 +352,33 @@
             </div>
         </div>
         <div class="gallery-section">
+            <h3>Video Tutorial: Jazz Up Your AI Memes</h3>
+            <div style="border: 1px solid var(--border-color); ">
+                <div class="video-content" style="border-top: none;">
+                    <video id="video-player" src="instructionvid.mov" preload="metadata"></video>
+                    <div class="video-controls-overlay" id="controls-overlay">
+                        <div class="upper-controls">
+                            <div class="left-controls">
+                                <button id="volume-btn" title="Mute/Unmute"><svg id="volume-icon-high" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg><svg id="volume-icon-muted" class="hidden" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"></path></svg></button>
+                                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                            </div>
+                            <button id="play-pause-btn" class="play-pause-btn" title="Play/Pause"><svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg id="pause-icon" class="hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg></button>
+                            <div class="right-controls">
+                                <button id="pip-btn" title="Picture-in-Picture"><svg viewBox="0 0 24 24"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"></path></svg></button>
+                                <button id="fullscreen-btn" title="Fullscreen"><svg id="fullscreen-icon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg><svg id="exit-fullscreen-icon" class="hidden" viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path></svg></button>
+                                <span id="speed-indicator" class="speed-indicator" title="Change playback speed">1.0x</span>
+                            </div>
+                        </div>
+                        <div class="progress-container"><span id="current-time">00:00</span><input type="range" id="progress-bar" class="progress-bar" min="0" value="0" step="0.1"><span id="duration">00:00</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="gallery-section">
             <h3>Which looks better?</h3>
             <div class="image-grid two-col-grid">
                 <div class="grid-image-container"><img src="no37.jpg" alt="Gallery Image 37"></div>
                 <div class="grid-image-container"><img src="no38.jpg" alt="Gallery Image 38"></div>
-            </div>
-        </div>
-        <div class="gallery-section">
-            <h3>ADHDified Crown:  This is one of the most powerful tools IPPI and I believe we all have for $ADHD. It acts like a badge - something you can place on any character, person, or animal to clearly show they have ADHD. Instead of just a cat having an ADHD moment, it becomes the ADHD cat-wearing the ADHD crown, fully on-brand and instantly recognizable. 
-Try quickly incorporating it into your posts whenever someone in the post clearly has ADHD - it reinforces the identity and strengthens the brand.
-It’s also an incredibly effective marketing tool, as you’ll see below.</h3>
-            <div class="image-grid three-col-grid">
-                <div class="grid-image-container"><img src="no39.jpg" alt="Gallery Image 39"></div>
-                <div class="grid-image-container"><img src="no40.jpg" alt="Gallery Image 40"></div>
-                <div class="grid-image-container"><img src="no41.jpg" alt="Gallery Image 41"></div>
-            </div>
-        </div>
-        <div class="gallery-section">
-             <p class="summary-text">This would be great use of the ADHDIFIER for targeted raids, not for the main x account. It takes like 30 seconds, raids will go hard.</p>
-            <div class="single-image-wrapper">
-                <div class="grid-image-container">
-                    <img src="no42.jpg" alt="Gallery Image 42">
-                </div>
             </div>
         </div>
         <div class="gallery-section">
@@ -438,9 +402,8 @@ It’s also an incredibly effective marketing tool, as you’ll see below.</h3>
             // --- Lightbox Logic ---
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
-            const galleriesWrapper = document.querySelector('.galleries-wrapper');
-
-            galleriesWrapper.addEventListener('click', (e) => {
+            
+            document.body.addEventListener('click', (e) => {
                 const imageContainer = e.target.closest('.grid-image-container');
                 if (imageContainer) {
                     const image = imageContainer.querySelector('img');
@@ -459,7 +422,7 @@ It’s also an incredibly effective marketing tool, as you’ll see below.</h3>
                 e.stopPropagation();
             });
 
-            // --- Video Player Logic (unchanged) ---
+            // --- Video Player Logic ---
             const videoContent = document.getElementById('video-content');
             const video = document.getElementById('video-player');
             const controlsOverlay = document.getElementById('controls-overlay');
